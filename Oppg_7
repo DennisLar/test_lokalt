@@ -1,1 +1,57 @@
+#Plotting: Dere skal la brukeren skrive inn et årstall og så skal programmet plotte
+#snødybde, nedbør, middeltemperatur og høyeste middelvind hver dag for dette året.
+#Hint: Konverter datoene fra strenger til datetime objekter for å få en finere visning av
+#datoene.
 
+
+
+import csv
+import matplotlib.pyplot as plt
+
+Dato = input("Skriv inn årstall (ÅÅÅÅ):")
+
+tid = []
+snoedybde = []
+nedbor = []
+middeltemperatur = []
+hoyeste_middelvind = []
+
+with open(r"C:\Users\rober\Documents\Programmering forelesninger\gruppearbeid\sinnes_2014_2025.csv",
+          "r", encoding="UTF-8") as fil:
+
+    leser = csv.reader(fil, delimiter=";")
+    next(leser)
+
+    for rad in leser:
+        if rad[2][-4:] == Dato:
+            tid.append(rad[2])
+
+            if rad[3].strip()== "-":
+                middeltemperatur.append(float(0))
+            else:
+                middeltemperatur.append(float(rad[3].replace(",",".")))
+
+            if rad[4].strip() == "-":
+                nedbor.append(float(0))
+            else:
+                nedbor.append(float(rad[4].replace(",",".")))
+
+            if rad[5].strip() ==  "-":
+                hoyeste_middelvind.append(float(0))
+            else:
+                hoyeste_middelvind.append(float(rad[5].replace(",",".")))
+
+            if rad[6].strip() == "-":
+                snoedybde.append(float(0))
+            else:
+                snoedybde.append(float(rad[6].replace(",", ".")))
+
+plt.plot(tid, snoedybde, label="Snødybde")
+plt.plot(tid, nedbor, label="Nedbør")
+plt.plot(tid, middeltemperatur, label="Middeltemperatur")
+plt.plot(tid, hoyeste_middelvind, label="Høyeste middelvind")
+plt.xlabel("Dato")
+plt.ylabel("Måleverdi")
+plt.legend()
+plt.grid()
+plt.show()
