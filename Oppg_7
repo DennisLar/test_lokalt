@@ -46,10 +46,10 @@ with open(r"C:\Users\rober\Documents\Programmering forelesninger\gruppearbeid\si
             else:
                 snoedybde.append(float(rad[6].replace(",", ".")))
 
-plt.plot(tid, snoedybde, label="Snødybde")
-plt.plot(tid, nedbor, label="Nedbør")
-plt.plot(tid, middeltemperatur, label="Middeltemperatur")
-plt.plot(tid, hoyeste_middelvind, label="Høyeste middelvind")
+plt.plot(tid, snoedybde, label="Snødybde", color = "purple")
+plt.plot(tid, nedbor, label="Nedbør", color = "red")
+plt.plot(tid, middeltemperatur, label="Middeltemperatur", color = "yellow")
+plt.plot(tid, hoyeste_middelvind, label="Høyeste middelvind", color = "blue" )
 plt.xlabel("Dato")
 plt.ylabel("Måleverdi")
 plt.legend()
