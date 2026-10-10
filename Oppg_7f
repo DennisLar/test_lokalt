@@ -1,0 +1,47 @@
+#Skiføre: Hvis vi antar at det er skiføre så lenge snødybden er minst 20cm, la brukeren
+#skrive inn et årstall og regn ut for et oppgitt år hvor mange dager det var skiføre den
+#skisesongen. En skisesong strekker seg fra november forrige år til mai dette året.
+
+import csv
+
+def muligedager(år_valgt):
+    skidagene = 0
+    
+
+
+    with open(r"C:\Users\rober\Documents\Programmering forelesninger\gruppearbeid\sinnes_2014_2025.csv",
+          "r", encoding="UTF-8") as fil:
+
+        leser = csv.reader(fil, delimiter=";")
+        next(leser)
+       
+
+        for rad in leser:
+            if len(rad) < 7:
+                continue
+            Dato = rad[2].split(".")
+            if len(Dato) != 3:
+                continue
+            
+            
+            år = int(Dato[2])
+            måned = int(Dato[1])
+
+            if (år == år_valgt-1 and måned >= 11) or (år == år_valgt and måned <= 5):
+
+                if rad[6] != "-":
+                    sno = float(rad[6].replace(",","."))
+                    if sno >= 20:
+                        skidagene +=1
+
+    return skidagene
+
+
+
+            
+            
+år_valgt= int(input(" skriv in dato (ÅÅÅÅ)"))
+skidagene = muligedager(år_valgt)
+print(skidagene)
+
+
