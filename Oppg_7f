@@ -1,0 +1,54 @@
+#Forenklet plantevekst: En forenklet modell av hvordan en plante vokser basert på
+#temperatur er som følger: Planten trenger et minimum av 5 plussgrader for å vokse. Dere
+#kan regne at planten sin vekst en gitt dag er lik temperatur minus
+#minimumstemperaturen. Beregn total plantevekst et gitt år.
+
+import csv
+
+dato = input("skriv in dato (ÅÅÅÅ)")
+
+temperatur =[]
+dogn = []
+
+with open (r"C:\Users\rober\Documents\Programmering forelesninger\gruppearbeid\sinnes_2014_2025.csv","r",encoding="UTF-8") as fil:
+
+    leser = csv.reader(fil,delimiter=";" )
+    next(leser)
+
+    for rad in leser:
+        if len(rad) < 7:
+            continue
+
+        Dato = rad[2].split(".")
+        if len(Dato) != 3:
+            continue
+
+        dag = Dato[0]
+        år = Dato[2]
+        if dato != år:
+            continue
+
+        if rad[3] == ("-"):
+            continue
+
+        godkjent_temp = float(rad[3].replace(",","."))
+        if godkjent_temp <= 5:
+            continue
+
+        if godkjent_temp >= 5:
+            minimum_temperatur = 5
+            vekst_Temp = float(godkjent_temp - minimum_temperatur)
+            temperatur.append(round(vekst_Temp,2))
+            dogn.append(dag)
+    totalvekst = sum(temperatur)
+    print(f"Totalveksten av planten i følgende {dato} er {totalvekst}")
+
+
+
+
+
+
+
+    
+
+
