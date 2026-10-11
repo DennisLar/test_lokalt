@@ -1,0 +1,48 @@
+#Antall pr. år: Tell antall sommerdager, høysommerdager og tropedager i det aktuelle året
+#og skriv ut dette. En sommerdag er en dag med maksimaltemperatur over 20 grader. En
+#høysommerdag har maksimaltemperatur over 25 grader og en tropedag har
+#maksimaltemperatur over 30 grader.
+
+
+import csv
+with open (r"C:\Users\rober\Documents\Programmering forelesninger\gruppearbeid\sinnes_2014_2025_med_makstemperatur.csv","r", encoding="UTF-8") as fila:
+    leser = csv.reader(fila,delimiter=";")
+    next (leser)
+
+    sommerdager = 0
+    høysommerdager = 0
+    tropedager = 0 
+
+    dato = input(" skriv in år (ÅÅÅÅ): ")
+
+    for rad in leser:
+        Dato = rad[2].split(".")
+        if rad[2] == ("-"):
+            continue
+
+        år = rad[2]
+
+        if år != dato:
+            continue
+
+        if rad[2] == ("-"):
+            continue
+
+        temperatur = float(rad[3].replace("," , "."))
+
+        if temperatur >=20 and temperatur <= 25 :
+            sommerdager += 1
+        elif temperatur >= 25 and temperatur <= 30: 
+            høysommerdager += 1
+        elif temperatur >= 30 :
+            tropedager +=1
+        else:
+            continue
+
+print(f"Antall sømmerdager er {sommerdager}\n")
+print(f"Antall høysømmerdager er {høysommerdager}\n")
+print(f"Antall tyoppedager er  {tropedager}\n")
+
+  
+  
+  
