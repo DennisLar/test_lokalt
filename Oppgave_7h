@@ -17,10 +17,12 @@ with open (r"C:\Users\rober\Documents\Programmering forelesninger\gruppearbeid\s
 
     for rad in leser:
         Dato = rad[2].split(".")
+        if len(Dato) != 3:
+            continue
         if rad[2] == ("-"):
             continue
 
-        år = rad[2]
+        år = Dato[2]
 
         if år != dato:
             continue
@@ -41,7 +43,7 @@ with open (r"C:\Users\rober\Documents\Programmering forelesninger\gruppearbeid\s
 
 print(f"Antall sømmerdager er {sommerdager}\n")
 print(f"Antall høysømmerdager er {høysommerdager}\n")
-print(f"Antall tyoppedager er  {tropedager}\n")
+print(f"Antall tropedager er  {tropedager}\n")
 
   
   
