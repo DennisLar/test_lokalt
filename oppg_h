@@ -1,1 +1,42 @@
+import csv
 
+filnavn = r"C:\Users\denni\OneDrive\Skrivebord\Skole\oppg_7\meaw_woof.csv"
+
+år = input("Skriv inn år (f.eks. 2014): ").strip()
+
+høyeste_temp = None
+sommerdager = 0
+høysommerdager = 0
+tropedager = 0
+
+with open(filnavn, "r", encoding="UTF-8") as fila:
+    fila.readline()   # hopp over overskriftsraden
+    csv_fila = csv.reader(fila, delimiter=";")
+
+    for verdier in csv_fila:
+        dato = verdier[2]            # f.eks. "01.01.2014"
+        if dato[-4:] != år:          # de siste 4 tegnene er året
+            continue
+
+        try:
+            temp = float(verdier[3].replace(",", "."))
+        except ValueError:
+            continue                 # hopp over manglende verdier ("-" eller tom)
+
+        if høyeste_temp is None or temp > høyeste_temp:
+            høyeste_temp = temp
+
+        if temp > 20:
+            sommerdager += 1
+        if temp > 25:
+            høysommerdager += 1
+        if temp > 30:
+            tropedager += 1
+
+if høyeste_temp is None:
+    print(f"Fant ingen temperaturdata for {år}.")
+else:
+    print(f"Høyeste temperatur i {år}: {høyeste_temp} °C")
+    print(f"Sommerdager (over 20 °C): {sommerdager}")
+    print(f"Høysommerdager (over 25 °C): {høysommerdager}")
+    print(f"Tropedager (over 30 °C): {tropedager}")
