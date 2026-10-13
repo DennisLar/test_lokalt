@@ -2,9 +2,9 @@ import csv
 
 filnavn = r"oppg_7\oppgave_i_programmering.txt"
 
-teller = 0            # dager på rad uten nedbør akkurat nå
-start_nå = None       # startdato for perioden vi er inni
-rekord = 0            # lengste periode funnet så langt
+teller = 0            
+start_nå = None     
+rekord = 0            
 rekord_start = None
 rekord_slutt = None
 
@@ -17,7 +17,7 @@ with open(filnavn, "r", encoding="UTF-8") as fila:
         try:
             nedbør = float(verdier[4].replace(",", "."))
         except ValueError:
-            teller = 0   # manglende verdi ("-" eller tom) bryter perioden
+            teller = 0   
             continue
 
         if nedbør == 0:
