@@ -1,1 +1,40 @@
+import csv
 
+filnavn = r"oppg_7\oppgave_i_programmering.txt"
+
+teller = 0            # dager på rad uten nedbør akkurat nå
+start_nå = None       # startdato for perioden vi er inni
+rekord = 0            # lengste periode funnet så langt
+rekord_start = None
+rekord_slutt = None
+
+with open(filnavn, "r", encoding="UTF-8") as fila:
+    fila.readline()   # hopp over overskriftsraden
+    csv_fila = csv.reader(fila, delimiter=";")
+
+    for verdier in csv_fila:
+        dato = verdier[2]
+        try:
+            nedbør = float(verdier[4].replace(",", "."))
+        except ValueError:
+            teller = 0   # manglende verdi ("-" eller tom) bryter perioden
+            continue
+
+        if nedbør == 0:
+            if teller == 0:
+                start_nå = dato
+            teller += 1
+
+            if teller > rekord:
+                rekord = teller
+                rekord_start = start_nå
+                rekord_slutt = dato
+        else:
+            teller = 0
+
+if rekord > 0:
+    print(f"Lengste periode uten nedbør: {rekord} dager")
+    print(f"Startdato: {rekord_start}")
+    print(f"Sluttdato: {rekord_slutt}")
+else:
+    print("Fant ingen dager uten nedbør.")
