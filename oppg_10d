@@ -1,0 +1,188 @@
+import csv
+import matplotlib.pyplot as plt
+
+filnavn_oslo = r"C:oppg_10\oslo_blindern_1954_2025_med_makstemperatur.csv"
+filnavn_roeros = r"C:oppg_10\roeros_1954_2025_med_makstemperatur.csv"
+filnavn_tromsoe = r"C:oppg_10\tromsoe_1954_2025_med_makstemperatur.csv"
+filnavn_vaernes = r"C:oppg_10\vaernes_1954_2025_med_makstemperatur.csv"
+filnavn_venabu = r"C:oppg_10\venabu_1954_2025_med_makstemperatur.csv"
+
+måneder = list(range(1, 13))
+
+#  Oslo 
+oslo = {}
+for måned in måneder:
+    oslo[måned] = []
+
+with open(filnavn_oslo, encoding="utf-8") as f:
+    leser = csv.reader(f, delimiter=";")
+    f.readline()
+    for rad in leser:
+        try:
+            verdi = float(rad[6].replace(",", "."))
+        except ValueError:
+            continue
+        måned = int(rad[2].split(".")[1])
+        oslo[måned].append(verdi)
+
+oslo_min = []
+oslo_med = []
+oslo_maks = []
+for måned in måneder:
+    verdier = sorted(oslo[måned])
+    n = len(verdier)
+    if n % 2 == 1:
+        med = verdier[n // 2]
+    else:
+        med = (verdier[n // 2 - 1] + verdier[n // 2]) / 2
+    oslo_min.append(verdier[0])
+    oslo_med.append(med)
+    oslo_maks.append(verdier[-1])
+
+# Roeros 
+roeros = {}
+for måned in måneder:
+    roeros[måned] = []
+
+with open(filnavn_roeros, encoding="utf-8") as f:
+    leser = csv.reader(f, delimiter=";")
+    f.readline()
+    for rad in leser:
+        try:
+            verdi = float(rad[6].replace(",", "."))
+        except ValueError:
+            continue
+        måned = int(rad[2].split(".")[1])
+        roeros[måned].append(verdi)
+
+roeros_min = []
+roeros_med = []
+roeros_maks = []
+for måned in måneder:
+    verdier = sorted(roeros[måned])
+    n = len(verdier)
+    if n % 2 == 1:
+        med = verdier[n // 2]
+    else:
+        med = (verdier[n // 2 - 1] + verdier[n // 2]) / 2
+    roeros_min.append(verdier[0])
+    roeros_med.append(med)
+    roeros_maks.append(verdier[-1])
+
+#  Tromsoe 
+tromsoe = {}
+for måned in måneder:
+    tromsoe[måned] = []
+
+with open(filnavn_tromsoe, encoding="utf-8") as f:
+    leser = csv.reader(f, delimiter=";")
+    f.readline()
+    for rad in leser:
+        try:
+            verdi = float(rad[6].replace(",", "."))
+        except ValueError:
+            continue
+        måned = int(rad[2].split(".")[1])
+        tromsoe[måned].append(verdi)
+
+tromsoe_min = []
+tromsoe_med = []
+tromsoe_maks = []
+for måned in måneder:
+    verdier = sorted(tromsoe[måned])
+    n = len(verdier)
+    if n % 2 == 1:
+        med = verdier[n // 2]
+    else:
+        med = (verdier[n // 2 - 1] + verdier[n // 2]) / 2
+    tromsoe_min.append(verdier[0])
+    tromsoe_med.append(med)
+    tromsoe_maks.append(verdier[-1])
+
+#  Vaernes 
+vaernes = {}
+for måned in måneder:
+    vaernes[måned] = []
+
+with open(filnavn_vaernes, encoding="utf-8") as f:
+    leser = csv.reader(f, delimiter=";")
+    f.readline()
+    for rad in leser:
+        try:
+            verdi = float(rad[6].replace(",", "."))
+        except ValueError:
+            continue
+        måned = int(rad[2].split(".")[1])
+        vaernes[måned].append(verdi)
+
+vaernes_min = []
+vaernes_med = []
+vaernes_maks = []
+for måned in måneder:
+    verdier = sorted(vaernes[måned])
+    n = len(verdier)
+    if n % 2 == 1:
+        med = verdier[n // 2]
+    else:
+        med = (verdier[n // 2 - 1] + verdier[n // 2]) / 2
+    vaernes_min.append(verdier[0])
+    vaernes_med.append(med)
+    vaernes_maks.append(verdier[-1])
+
+#  Venabu 
+venabu = {}
+for måned in måneder:
+    venabu[måned] = []
+
+with open(filnavn_venabu, encoding="utf-8") as f:
+    leser = csv.reader(f, delimiter=";")
+    f.readline()
+    for rad in leser:
+        try:
+            verdi = float(rad[6].replace(",", "."))
+        except ValueError:
+            continue
+        måned = int(rad[2].split(".")[1])
+        venabu[måned].append(verdi)
+
+venabu_min = []
+venabu_med = []
+venabu_maks = []
+for måned in måneder:
+    verdier = sorted(venabu[måned])
+    n = len(verdier)
+    if n % 2 == 1:
+        med = verdier[n // 2]
+    else:
+        med = (verdier[n // 2 - 1] + verdier[n // 2]) / 2
+    venabu_min.append(verdier[0])
+    venabu_med.append(med)
+    venabu_maks.append(verdier[-1])
+
+
+plt.plot(måneder, oslo_min, "--", color="blue", label="Oslo min")
+plt.plot(måneder, oslo_med, "-", color="blue", label="Oslo median")
+plt.plot(måneder, oslo_maks, ":", color="blue", label="Oslo maks")
+
+plt.plot(måneder, roeros_min, "--", color="red", label="Røros min")
+plt.plot(måneder, roeros_med, "-", color="red", label="Røros median")
+plt.plot(måneder, roeros_maks, ":", color="red", label="Røros maks")
+
+plt.plot(måneder, tromsoe_min, "--", color="green", label="Tromsø min")
+plt.plot(måneder, tromsoe_med, "-", color="green", label="Tromsø median")
+plt.plot(måneder, tromsoe_maks, ":", color="green", label="Tromsø maks")
+
+plt.plot(måneder, vaernes_min, "--", color="orange", label="Værnes min")
+plt.plot(måneder, vaernes_med, "-", color="orange", label="Værnes median")
+plt.plot(måneder, vaernes_maks, ":", color="orange", label="Værnes maks")
+
+plt.plot(måneder, venabu_min, "--", color="purple", label="Venabu min")
+plt.plot(måneder, venabu_med, "-", color="purple", label="Venabu median")
+plt.plot(måneder, venabu_maks, ":", color="purple", label="Venabu maks")
+
+plt.xlabel("Måned")
+plt.ylabel("Vindstyrke (m/s)")
+plt.title("Vindstyrke per måned for alle stasjoner")
+plt.xticks(måneder)
+plt.legend(fontsize=7, ncol=2)
+plt.show()
