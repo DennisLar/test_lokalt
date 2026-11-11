@@ -1,0 +1,132 @@
+import csv
+import matplotlib.pyplot as plt
+
+
+filnavn_oslo = r"C:oppg_10\oslo_blindern_1954_2025_med_makstemperatur.csv"
+filnavn_roeros = r"C:oppg_10\roeros_1954_2025_med_makstemperatur.csv"
+filnavn_tromsoe = r"C:oppg_10\tromsoe_1954_2025_med_makstemperatur.csv"
+filnavn_vaernes = r"C:oppg_10\vaernes_1954_2025_med_makstemperatur.csv"
+filnavn_venabu = r"C:oppg_10\venabu_1954_2025_med_makstemperatur.csv"
+
+#  Oslo 
+oslo = {}
+with open(filnavn_oslo, encoding="utf-8") as f:
+    leser = csv.reader(f, delimiter=";")
+    f.readline()
+    for rad in leser:
+        try:
+            temp = float(rad[4].replace(",", "."))
+        except ValueError:
+            continue
+        år = int(rad[2].split(".")[2])
+        if år not in oslo:
+            oslo[år] = []
+        oslo[år].append(temp)
+
+oslo_år = []
+oslo_snitt = []
+for år in sorted(oslo):
+    if len(oslo[år]) >= 300:
+        oslo_år.append(år)
+        oslo_snitt.append(sum(oslo[år]) / len(oslo[år]))
+
+#  Roeros 
+roeros = {}
+with open(filnavn_roeros, encoding="utf-8") as f:
+    leser = csv.reader(f, delimiter=";")
+    f.readline()
+    for rad in leser:
+        try:
+            temp = float(rad[4].replace(",", "."))
+        except ValueError:
+            continue
+        år = int(rad[2].split(".")[2])
+        if år not in roeros:
+            roeros[år] = []
+        roeros[år].append(temp)
+
+roeros_år = []
+roeros_snitt = []
+for år in sorted(roeros):
+    if len(roeros[år]) >= 300:
+        roeros_år.append(år)
+        roeros_snitt.append(sum(roeros[år]) / len(roeros[år]))
+
+#  Tromsoe 
+tromsoe = {}
+with open(filnavn_tromsoe, encoding="utf-8") as f:
+    leser = csv.reader(f, delimiter=";")
+    f.readline()
+    for rad in leser:
+        try:
+            temp = float(rad[4].replace(",", "."))
+        except ValueError:
+            continue
+        år = int(rad[2].split(".")[2])
+        if år not in tromsoe:
+            tromsoe[år] = []
+        tromsoe[år].append(temp)
+
+tromsoe_år = []
+tromsoe_snitt = []
+for år in sorted(tromsoe):
+    if len(tromsoe[år]) >= 300:
+        tromsoe_år.append(år)
+        tromsoe_snitt.append(sum(tromsoe[år]) / len(tromsoe[år]))
+
+#  Vaernes 
+vaernes = {}
+with open(filnavn_vaernes, encoding="utf-8") as f:
+    leser = csv.reader(f, delimiter=";")
+    f.readline()
+    for rad in leser:
+        try:
+            temp = float(rad[4].replace(",", "."))
+        except ValueError:
+            continue
+        år = int(rad[2].split(".")[2])
+        if år not in vaernes:
+            vaernes[år] = []
+        vaernes[år].append(temp)
+
+vaernes_år = []
+vaernes_snitt = []
+for år in sorted(vaernes):
+    if len(vaernes[år]) >= 300:
+        vaernes_år.append(år)
+        vaernes_snitt.append(sum(vaernes[år]) / len(vaernes[år]))
+
+#  Venabu 
+venabu = {}
+with open(filnavn_venabu, encoding="utf-8") as f:
+    leser = csv.reader(f, delimiter=";")
+    f.readline()
+    for rad in leser:
+        try:
+            temp = float(rad[4].replace(",", "."))
+        except ValueError:
+            continue
+        år = int(rad[2].split(".")[2])
+        if år not in venabu:
+            venabu[år] = []
+        venabu[år].append(temp)
+
+venabu_år = []
+venabu_snitt = []
+for år in sorted(venabu):
+    if len(venabu[år]) >= 300:
+        venabu_år.append(år)
+        venabu_snitt.append(sum(venabu[år]) / len(venabu[år]))
+
+
+plt.plot(oslo_år, oslo_snitt, label="Oslo")
+plt.plot(roeros_år, roeros_snitt, label="Røros")
+plt.plot(tromsoe_år, tromsoe_snitt, label="Tromsø")
+plt.plot(vaernes_år, vaernes_snitt, label="Værnes")
+plt.plot(venabu_år, venabu_snitt, label="Venabu")
+
+plt.xlabel("År")
+plt.ylabel("Avg. tamp. (°C)")
+plt.title("Årlig avg. per værstasjon")
+plt.legend()
+plt.show()
