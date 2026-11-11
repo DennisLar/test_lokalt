@@ -1,0 +1,53 @@
+
+
+import matplotlib.pyplot as pit
+
+import csv
+
+with open (r"C:\Users\rober\Documents\Programmering forelesninger\gruppearbeid\oslo_blindern_1954_2025_med_makstemperatur.csv","r", encoding="UTF-8") as fila:
+    leser = csv.reader(fila,delimiter=";")
+    next (leser)
+
+    sommerdager = []
+    høysommerdager = []
+    tropedager = []
+    tid = []
+ 
+
+
+    for rad in leser:
+        Dato = rad[2].split(".")
+        if len(Dato) != 3:
+            continue
+        if rad[2] == ("-"):
+            continue
+        år = Dato[2]
+
+        temperatur = float(rad[3].replace("," , "."))
+        if år not in tid:
+            tid.append(år) # if år er ikke i liste tid det setter det inn
+            sommerdager.append(0)
+            tropedager.append(0)
+            høysommerdager.append(0)
+
+        for årene in range(len(tid)): # for årene in range lengden av tid [2020,2021,2023] = 3
+            if tid[årene] == år:
+
+
+                if temperatur >20:
+                    sommerdager[årene] += 1
+                if temperatur > 25:
+                    høysommerdager[årene] += 1
+                if temperatur >= 30 :
+                    tropedager[årene] += 1
+
+
+pit.plot(tid,sommerdager,color="blue")
+pit.plot(tid, høysommerdager, color = "purple")
+pit.plot(tid, tropedager, color= "green")
+pit.xlabel(" år")
+pit.ylabel(" antall dager")
+pit.grid()
+pit.title("sommerdager, høysommerdager, troppedager")
+pit.legend()
+pit.show()
