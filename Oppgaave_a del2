@@ -1,0 +1,111 @@
+
+import csv
+import matplotlib.pyplot as plt
+
+tid = []
+snoedybde = []
+nedbor = []
+middeltemperatur_max = []
+middeltemperatur_min = []
+hoyeste_middelvind = []
+
+alle_snø = []
+alle_nedbor = []
+alle_temperatur = []
+alle_middelvind = []
+
+with open(r"gruppearbeid\oslo_blindern_1954_2025_med_makstemperatur.csv", "r", encoding="UTF-8") as fil1, \
+     open(r"gruppearbeid\sinnes_2014_2025_med_makstemperatur.csv", "r", encoding="UTF-8") as fil2, \
+     open(r"gruppearbeid\roeros_1954_2025_med_makstemperatur.csv", "r", encoding="UTF-8") as fil3, \
+     open(r"C:\Users\rober\Documents\Programmering forelesninger\gruppearbeid\tromsoe_1954_2025_med_makstemperatur.csv", "r", encoding="UTF-8") as fil4, \
+     open(r"C:\Users\rober\Documents\Programmering forelesninger\gruppearbeid\vaernes_1954_2025_med_makstemperatur.csv", "r", encoding="UTF-8") as fil5, \
+     open(r"C:\Users\rober\Documents\Programmering forelesninger\gruppearbeid\venabu_1954_2025_med_makstemperatur.csv", "r", encoding="UTF-8") as fil6:
+
+    inhold1 = fil1
+    inhold2 = fil2
+    inhold3 = fil3
+    inhold4 = fil4
+    inhold5 = fil5
+    inhold6 = fil6
+
+    lesere = [
+        csv.reader(inhold1, delimiter=";"),
+        csv.reader(inhold2, delimiter=";"),
+        csv.reader(inhold3, delimiter=";"),
+        csv.reader(inhold4, delimiter=";"),
+        csv.reader(inhold5, delimiter=";"),
+        csv.reader(inhold6, delimiter=";")]
+
+    for leser in lesere:
+        next(leser)
+
+        for rad in leser:
+
+            Dato = str(rad[2]).split(".")
+            if len(Dato) == 3:
+                år = Dato[2]
+                måne = Dato[1]
+                datoen = måne + "." + år
+            else:
+                continue
+
+            if datoen not in tid:
+                tid.append(datoen)
+                alle_snø.append([])
+                alle_nedbor.append([])
+                alle_temperatur.append([])
+                alle_middelvind.append([])
+
+            for dager in range(len(tid)):
+                if tid[dager] == datoen:
+
+                    if rad[4].strip() != "-":
+                        alle_temperatur[dager].append(float(rad[4].replace(",", ".")))
+
+                    if rad[5].strip() != "-":
+                        alle_nedbor[dager].append(float(rad[5].replace(",", ".")))
+
+                    if rad[6].strip() != "-":
+                        alle_middelvind[dager].append(float(rad[6].replace(",", ".")))
+
+                    if rad[7].strip() != "-":
+                        alle_snø[dager].append(float(rad[7].replace(",", ".")))
+
+
+    for måne in range(len(tid)):
+
+        if alle_snø[måne]:
+            snoedybde.append(max(alle_snø[måne]))
+        else:
+            snoedybde.append(0)
+
+        if len(alle_nedbor[måne]) > 20:
+            nedbor.append(sum(alle_nedbor[måne]))
+        else:
+            nedbor.append(float(0.0))
+
+        if alle_temperatur[måne]:
+            middeltemperatur_max.append(max(alle_temperatur[måne]))
+            middeltemperatur_min.append(min(alle_temperatur[måne]))
+        else:
+            middeltemperatur_max.append(0)
+            middeltemperatur_min.append(0)
+
+        if alle_middelvind[måne]:
+            hoyeste_middelvind.append(max(alle_middelvind[måne]))
+        else:
+            hoyeste_middelvind.append(0)
+
+
+plt.plot(tid, snoedybde, label="Maks snødybde", color="purple")
+plt.plot(tid, nedbor, label="Total nedbør", color="red")
+plt.plot(tid, middeltemperatur_max, label="Maks middeltemperatur", color="yellow")
+plt.plot(tid, middeltemperatur_min, label="Min middeltemperatur", color="orange")
+plt.plot(tid, hoyeste_middelvind, label="Maks middelvind", color="blue")
+
+plt.xlabel("Dato")
+plt.ylabel("Mål")
+plt.title("shit")
+plt.legend()
+plt.grid()
+plt.show()
